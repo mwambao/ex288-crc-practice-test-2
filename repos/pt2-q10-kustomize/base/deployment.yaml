@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: kustom-app}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: kustom-app}}
+  template:
+    metadata: {labels: {app: kustom-app}}
+    spec: {containers: [{name: app, image: registry.access.redhat.com/ubi9/ubi-minimal, command: ["sleep","infinity"]}]}

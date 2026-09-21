@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata: {name: deploy}
+spec:
+  params:
+  - {name: APP_NAME, type: string}
+  - {name: IMAGE, type: string}
+  tasks:
+  - name: deploy-info
+    taskSpec:
+      params: [{name: APP_NAME},{name: IMAGE}]
+      steps:
+      - name: show
+        image: registry.access.redhat.com/ubi9/ubi-minimal
+        script: |
+          echo "deploy $(params.APP_NAME) from $(params.IMAGE)"
+    params:
+    - {name: APP_NAME, value: "$(params.APP_NAME)"}
+    - {name: IMAGE, value: "$(params.IMAGE)"}

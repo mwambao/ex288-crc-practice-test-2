@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels: {app.kubernetes.io/instance: {{ .Release.Name }}}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector: {matchLabels: {app: {{ .Release.Name }}}}
+  template:
+    metadata: {labels: {app: {{ .Release.Name }}, app.kubernetes.io/instance: {{ .Release.Name }}}}
+    spec:
+      containers:
+      - name: writer
+        image: registry.access.redhat.com/ubi9/ubi-minimal
+        command: ["/bin/sh","-c"]
+        args: ["echo '{{ .Values.message }}' > /shared/index.html; sleep infinity"]
+        volumeMounts: [{name: shared, mountPath: /shared}]
+      - name: reader
+        image: registry.access.redhat.com/ubi9/httpd-24
+        volumeMounts: [{name: shared, mountPath: /var/www/html}]
+        ports: [{containerPort: 8080}]
+      volumes: [{name: shared, emptyDir: {}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: {{ .Release.Name }}}
+spec: {selector: {app: {{ .Release.Name }}}, ports: [{port: 8080, targetPort: 8080}]}

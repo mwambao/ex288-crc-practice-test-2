@@ -1,0 +1,1 @@
+FROM image-registry.openshift-image-registry.svc:5000/cobalt/parent-web:1.0

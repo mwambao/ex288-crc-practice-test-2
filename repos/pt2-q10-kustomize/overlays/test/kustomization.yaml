@@ -1,0 +1,2 @@
+resources: [../../base]
+# TODO: add replicas, labels, and environment-only patch

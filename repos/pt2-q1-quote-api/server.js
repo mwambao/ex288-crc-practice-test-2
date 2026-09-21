@@ -1,0 +1,1 @@
+const http=require('http'); const port=process.env.PORT||8080; http.createServer((q,r)=>{r.end('Fortune favors the prepared\n')}).listen(port,'0.0.0.0');

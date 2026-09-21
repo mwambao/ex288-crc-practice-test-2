@@ -1,0 +1,1 @@
+const http=require('http'); const start=Date.now(); http.createServer((q,r)=>{if(q.url==='/startup'&&Date.now()-start<12000){r.statusCode=503;return r.end('starting')} if(['/startup','/healthz','/ready','/'].includes(q.url))return r.end('ok');r.statusCode=404;r.end('no')}).listen(8080,'0.0.0.0');

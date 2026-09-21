@@ -1,0 +1,1 @@
+const http=require('http'); const p=process.env.PORT||8080; http.createServer((q,r)=>{const loaded=process.env.API_USER&&process.env.API_KEY?'credentials-loaded':'credentials-missing';r.end(`${process.env.GREETING||'unset'} | ${process.env.LOG_LEVEL||'unset'} | ${loaded}\n`)}).listen(p,'0.0.0.0');

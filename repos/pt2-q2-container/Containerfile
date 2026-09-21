@@ -1,0 +1,5 @@
+FROM registry.access.redhat.com/ubi9/httpd-24
+ARG BANNER_URL
+RUN mkdir -p /opt/app-root/src
+RUN curl -fsSL "$BANNER_URL" -o /opt/app-root/src/banner.txt
+RUN echo 'Parent image default' > /opt/app-root/src/index.html

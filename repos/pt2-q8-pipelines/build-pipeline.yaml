@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata: {name: build}
+spec:
+  params:
+  - {name: IMAGE, type: string}
+  - {name: SOURCE_URL, type: string}
+  tasks:
+  - name: inspect-build-inputs
+    taskSpec:
+      params: [{name: IMAGE},{name: SOURCE_URL}]
+      steps:
+      - name: show
+        image: registry.access.redhat.com/ubi9/ubi-minimal
+        script: |
+          echo "source=$(params.SOURCE_URL)"
+          echo "image=$(params.IMAGE)"
+    params:
+    - {name: IMAGE, value: "$(params.IMAGE)"}
+    - {name: SOURCE_URL, value: "$(params.SOURCE_URL)"}
